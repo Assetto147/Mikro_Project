@@ -280,9 +280,14 @@ void readChar() {
 					case 0x22:
 						put("\nkomenda 0x22");
 
+						LCD_clrScr();
+						LCD_print("Milo Mi!",0,0);
+
 						break;
 					case 0x11:
 						put("\nkomenda 0x11");
+						LCD_clrScr();
+						LCD_print("Milo Mi!",0,0);
 
 						break;
 					case 0x66:

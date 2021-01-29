@@ -85,11 +85,11 @@ void SystemClock_Config(void);
 // KONFIGURACJA PINÓW NA STMF103RB BY GAWRYŚ:
 
 //WYSWIETLACZ:
-//RST --> PA5
-//CE  --> PA6
+//RST --> PC7
+//CE  --> PB6
 //DC  --> PA7
-//Din --> PA
-//Clk --> PA
+//Din --> PA6
+//Clk --> PA5
 
 
 //TIM2_CHANNEL_3:

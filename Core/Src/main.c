@@ -128,11 +128,12 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 				Error_Handler(); //jeśli coś innego to error
 			}
 
-			CPM = HAL_RCC_GetPCLK1Freq()*Difference;  // liczenie wartości CPM
+			CPM = HAL_RCC_GetPCLK1Freq()/Difference;  // liczenie wartości CPM
 			Is_First_Captured = 0;  // resetowanie flagi naszej.
 		}
 	}
 }
+
 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) { // odbiór i zapis danych na przerwaniach
@@ -365,6 +366,10 @@ int main(void)
 	LCD_setCLK(Clk_GPIO_Port, Clk_Pin);
 
 	char res[20];
+
+
+	uint8_t uSperH;
+	uSperH = CPM * 0.006666;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

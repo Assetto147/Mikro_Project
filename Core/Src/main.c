@@ -65,6 +65,8 @@ bool crcCorrect; // wskaźnik poprawności kodu kontrolnego
 char crc[2]; // kod kontrolny odczytany w ramce
 char hello_command[] = "Hello, I am STM32!!! \n\r";
 
+
+// Do obsługi timera2_Ch3
 uint32_t value_1 = 0;
 uint32_t value_2 = 0;
 uint32_t Difference = 0;

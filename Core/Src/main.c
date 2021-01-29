@@ -71,6 +71,8 @@ uint32_t Difference = 0;
 uint32_t CPM = 0;
 uint8_t Is_First_Captured = 0;
 
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,7 +95,7 @@ void SystemClock_Config(void);
 
 
 
-
+//
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 {
@@ -359,6 +361,8 @@ int main(void)
 	LCD_setDC(DC_GPIO_Port, DC_Pin);
 	LCD_setDIN(Din_GPIO_Port, Din_Pin);
 	LCD_setCLK(Clk_GPIO_Port, Clk_Pin);
+
+	char res[20];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -389,20 +393,29 @@ int main(void)
 
   LCD_init();
 
-  LCD_print("Wait...",0,0);
+  //LCD_print("Wait...",0,0);
   //  LCD_print("bialym na",0,1);
     // LCD_print("niebie!",0,2);
     // LCD_print("Ona plynie",0,3);
    // LCD_print("dokola siebie!",0,4);
+
+ // float pomocnicza = 0.8888;
+
+
+
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
+ // sprintf(res, "A:%d", pomocnicza);
+ // 	  LCD_print(3, 1, res);
+
 
   while (1)
   {
+
 
     /* USER CODE END WHILE */
 

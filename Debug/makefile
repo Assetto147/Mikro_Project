@@ -55,7 +55,7 @@ main-build: WYSWIETLACZ1.elf secondary-outputs
 
 # Tool invocations
 WYSWIETLACZ1.elf: $(OBJS) $(USER_OBJS) C:\Users\malgo\STM32CubeIDE\workspace_1.4.0\WYSWIETLACZ1\STM32F103RBTX_FLASH.ld
-	arm-none-eabi-gcc -o "WYSWIETLACZ1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\malgo\STM32CubeIDE\workspace_1.4.0\WYSWIETLACZ1\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="WYSWIETLACZ1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "WYSWIETLACZ1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\malgo\STM32CubeIDE\workspace_1.4.0\WYSWIETLACZ1\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="WYSWIETLACZ1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

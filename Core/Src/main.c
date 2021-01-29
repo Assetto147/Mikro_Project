@@ -67,10 +67,10 @@ char hello_command[] = "Hello, I am STM32!!! \n\r";
 
 
 // Do obsługi timera2_Ch3
-uint32_t value_1 = 0;
-uint32_t value_2 = 0;
-uint32_t Difference = 0;
-uint32_t CPM = 0;
+uint16_t value_1 = 0;
+uint16_t value_2 = 0;
+uint16_t Difference = 0;
+uint16_t CPM = 0;
 uint8_t Is_First_Captured = 0;
 
 

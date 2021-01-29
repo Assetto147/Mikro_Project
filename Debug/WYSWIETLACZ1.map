@@ -240,15 +240,15 @@ Discarded input sections
  .rodata.ASCII  0x0000000000000000      0x240 Core/Src/main.o
  .data.hello_command
                 0x0000000000000000       0x18 Core/Src/main.o
- .bss.value_1   0x0000000000000000        0x4 Core/Src/main.o
- .bss.value_2   0x0000000000000000        0x4 Core/Src/main.o
+ .bss.value_1   0x0000000000000000        0x2 Core/Src/main.o
+ .bss.value_2   0x0000000000000000        0x2 Core/Src/main.o
  .bss.Difference
-                0x0000000000000000        0x4 Core/Src/main.o
- .bss.CPM       0x0000000000000000        0x4 Core/Src/main.o
+                0x0000000000000000        0x2 Core/Src/main.o
+ .bss.CPM       0x0000000000000000        0x2 Core/Src/main.o
  .bss.Is_First_Captured
                 0x0000000000000000        0x1 Core/Src/main.o
  .text.HAL_TIM_IC_CaptureCallback
-                0x0000000000000000       0xb8 Core/Src/main.o
+                0x0000000000000000       0xc0 Core/Src/main.o
  .debug_macro   0x0000000000000000      0xa5a Core/Src/main.o
  .debug_macro   0x0000000000000000      0x21b Core/Src/main.o
  .debug_macro   0x0000000000000000       0x2e Core/Src/main.o
@@ -3868,25 +3868,25 @@ LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000000000aaa       0x1d c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.5.0.202011040924/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/crtn.o
 OUTPUT(WYSWIETLACZ1.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0xc52f
+.debug_info     0x0000000000000000     0xc530
  .debug_info    0x0000000000000000      0x4bf Core/Src/gpio.o
- .debug_info    0x00000000000004bf     0x1830 Core/Src/main.o
- .debug_info    0x0000000000001cef      0x8d7 Core/Src/nokia5110_LCD.o
- .debug_info    0x00000000000025c6      0x2d6 Core/Src/stm32f1xx_hal_msp.o
- .debug_info    0x000000000000289c      0x64e Core/Src/stm32f1xx_it.o
- .debug_info    0x0000000000002eea      0x985 Core/Src/sysmem.o
- .debug_info    0x000000000000386f      0x29a Core/Src/system_stm32f1xx.o
- .debug_info    0x0000000000003b09      0xad2 Core/Src/tim.o
- .debug_info    0x00000000000045db      0x8f9 Core/Src/usart.o
- .debug_info    0x0000000000004ed4       0x22 Core/Startup/startup_stm32f103rbtx.o
- .debug_info    0x0000000000004ef6      0x714 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.o
- .debug_info    0x000000000000560a      0xb51 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o
- .debug_info    0x000000000000615b      0x7b1 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.o
- .debug_info    0x000000000000690c      0x69b Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_gpio.o
- .debug_info    0x0000000000006fa7      0x80f Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_rcc.o
- .debug_info    0x00000000000077b6     0x27ef Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim.o
- .debug_info    0x0000000000009fa5     0x136f Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim_ex.o
- .debug_info    0x000000000000b314     0x121b Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_uart.o
+ .debug_info    0x00000000000004bf     0x1831 Core/Src/main.o
+ .debug_info    0x0000000000001cf0      0x8d7 Core/Src/nokia5110_LCD.o
+ .debug_info    0x00000000000025c7      0x2d6 Core/Src/stm32f1xx_hal_msp.o
+ .debug_info    0x000000000000289d      0x64e Core/Src/stm32f1xx_it.o
+ .debug_info    0x0000000000002eeb      0x985 Core/Src/sysmem.o
+ .debug_info    0x0000000000003870      0x29a Core/Src/system_stm32f1xx.o
+ .debug_info    0x0000000000003b0a      0xad2 Core/Src/tim.o
+ .debug_info    0x00000000000045dc      0x8f9 Core/Src/usart.o
+ .debug_info    0x0000000000004ed5       0x22 Core/Startup/startup_stm32f103rbtx.o
+ .debug_info    0x0000000000004ef7      0x714 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.o
+ .debug_info    0x000000000000560b      0xb51 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o
+ .debug_info    0x000000000000615c      0x7b1 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.o
+ .debug_info    0x000000000000690d      0x69b Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_gpio.o
+ .debug_info    0x0000000000006fa8      0x80f Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_rcc.o
+ .debug_info    0x00000000000077b7     0x27ef Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim.o
+ .debug_info    0x0000000000009fa6     0x136f Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim_ex.o
+ .debug_info    0x000000000000b315     0x121b Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_uart.o
 
 .debug_abbrev   0x0000000000000000     0x2112
  .debug_abbrev  0x0000000000000000      0x13d Core/Src/gpio.o

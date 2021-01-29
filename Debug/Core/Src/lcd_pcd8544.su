@@ -1,0 +1,10 @@
+lcd_pcd8544.c:14:6:LCD_PCD8544_init	24	static
+lcd_pcd8544.c:64:19:LCD_PCD8544_write_bytes	32	static
+lcd_pcd8544.c:101:19:LCD_PCD8544_clear_ram	24	static
+lcd_pcd8544.c:106:19:LCD_PCD8544_write_char	32	static
+lcd_pcd8544.c:118:19:LCD_PCD8544_fill_block	32	static
+lcd_pcd8544.c:132:19:LCD_PCD8544_write_str	128	static
+lcd_pcd8544.c:157:19:LCD_PCD8544_write_line	128	static
+lcd_pcd8544.c:183:6:LCD_PCD8544_push_line	24	static
+lcd_pcd8544.c:197:19:LCD_PCD8544_push_line2	536	static
+lcd_pcd8544.c:221:19:LCD_PCD8544_stack_line	24	static

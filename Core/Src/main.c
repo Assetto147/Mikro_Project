@@ -73,7 +73,7 @@ uint16_t Difference = 0;
 uint16_t CPM = 0;
 uint8_t Is_First_Captured = 0;
 
-
+uint8_t uSperH;
 
 /* USER CODE END PV */
 
@@ -130,6 +130,8 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 
 			CPM = HAL_RCC_GetPCLK1Freq()/Difference;  // liczenie wartości CPM
 			Is_First_Captured = 0;  // resetowanie flagi naszej.
+
+			uSperH = CPM * 0.006666;
 		}
 	}
 }
@@ -368,8 +370,7 @@ int main(void)
 	char res[20];
 
 
-	uint8_t uSperH;
-	uSperH = CPM * 0.006666;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

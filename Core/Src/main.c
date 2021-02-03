@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include "math.h"
 #include "nokia5110_LCD.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,18 +43,21 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define numReadings 30
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 
+//USART
 char RxBUF[200]; // bufor do odbioru
 char TxBUF[200]; // bufor do nadawania
 uint8_t temp[1]; // zmienna na pojedynczy znak
 uint8_t rx_e = 0, rx_f = 0; // wskaźniki w buforze do odbioru
 uint8_t tx_e = 0, tx_f = 0; // wskaźniki w buforze do nadawania
+
+//Protokół
 uint8_t counter = 0; // wskaźnik dla komendy bufora odbiorczego
 bool frameStarted = false; // wskaźnik odczytania początku ramki
 bool frameCompleted = false; // wskaźnik kompletności ramki
@@ -65,16 +69,18 @@ bool crcCorrect; // wskaźnik poprawności kodu kontrolnego
 char crc[2]; // kod kontrolny odczytany w ramce
 char hello_command[] = "Hello, I am STM32!!! \n\r";
 
-
-// Do obsługi timera2_Ch3
-uint16_t value_1 = 0;
-uint16_t value_2 = 0;
-uint16_t Difference = 0;
-uint16_t CPM = 0;
-uint8_t Is_First_Captured = 0;
-
-uint8_t uSperH;
-
+//Licznie impulsów
+int readings[numReadings];
+int indeks = 0;
+long value_1 = 0;
+long value_2 = 0;
+long Difference = 0;
+int CPM = 0;
+bool Is_First_Captured = 0;
+int total = 0;
+float uSperH;
+int meanCPM = 0;
+float uSperHmax = 0.0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,7 +88,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
 
-// KONFIGURACJA PINÓW NA STMF103RB BY GAWRYŚ:
+// KONFIGURACJA PINÓW NA STMF103RB:
 
 //WYSWIETLACZ:
 //RST --> PC7
@@ -92,12 +98,6 @@ void SystemClock_Config(void);
 //Clk --> PA5
 
 
-//TIM2_CHANNEL_3:
-//
-
-
-
-//
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 {
@@ -128,10 +128,44 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 				Error_Handler(); //jeśli coś innego to error
 			}
 
-			CPM = HAL_RCC_GetPCLK1Freq()/Difference;  // liczenie wartości CPM
+			CPM = 400000 / Difference;
+//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
 			Is_First_Captured = 0;  // resetowanie flagi naszej.
 
-			uSperH = CPM * 0.006666;
+			LCD_clrScr();
+
+			uSperH = ((CPM * 0.006666));   // Konwertowanie wartości
+			if (uSperH > uSperHmax) {
+			      uSperHmax = uSperH;
+			    }
+			char res[1000];
+			sprintf(res, "uSH: %.4f", uSperH);
+			LCD_print(res,0,3);
+			for (int i = 0; i < numReadings; i++) {
+			      readings[i] = 0;
+			    }
+
+
+			total -= readings[indeks];
+			readings[indeks] = CPM;
+			total += readings[indeks];
+			indeks = (indeks + 1);
+
+			if (indeks >= numReadings){
+				indeks = 0;
+			}
+
+
+			meanCPM = total / numReadings;
+
+
+			 char tab_cpm[1000];
+			 sprintf(tab_cpm, "CPM: %d", CPM);
+			 LCD_print(tab_cpm,0,2);
+
+			 char tab_meancpm[100];
+			 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
+			 LCD_print(tab_meancpm,0,4);
 		}
 	}
 }
@@ -184,13 +218,15 @@ void put(char ch[]) { // dodawanie komend do bufora nadawczego
 		tx_e = index; // znaki łańcucha czekają w kolejce w buforze
 	__enable_irq();
 }
+
+
 void readChar() {
 
 	if (RxBUF[rx_f] == 0xEE) { // znak początku ramki
 		counter = 0; // ustawienie wartości startowych zmiennych
-		frameStarted = true;
-		frameCompleted = false;
-		dataLength = 0;
+		frameStarted = true;  // wskaźnik czy ramka się zaczęła
+		frameCompleted = false; //wskaźnik czy ramka się skończyła
+		dataLength = 0;  // długość pola danych
 		sign0xEAIsRead = false;
 		for(int i = 0; i < 14; i++){
 			frame[i] = 0x00;
@@ -231,7 +267,7 @@ void readChar() {
 				return;
 			}
 		}
-		if (dataLength > 0) {
+		if (dataLength > 0) {  //sprawdza wtedy kiedy dataLengt jest większe od zera
 			if (counter > 3 && counter <= counter + dataLength) { // pole DATA
 				if (sign0xEAIsRead) { // sprawdzenie czy poprzedni znak to 0xEA
 					sign0xEAIsRead = false;
@@ -255,13 +291,13 @@ void readChar() {
 			frameCompleted = true; // przeczytano wszystkie znaki ramki
 	}
 
-	if (frameCompleted) {
+	if (frameCompleted) {    // jeżeli ramka jest przeczytana to sprawdzamy CRC
 		checkCRC();
-		if (!crcCorrect) {
+		if (!crcCorrect) {  // jeśli jest zła to wyświetlamy błąd
 			error = 0x06;
 			my_Error_Handler();
 			return;
-		} else
+		} else          // jeśli wszystko jest dobrze to możemy zacząć analizować ramkę (sprawdzamy polecenia)
 			if (frame[3] != 0x11 && frame[3] != 0x22 && frame[3] != 0x33
 					&& frame[3] != 0x44 && frame[3] != 0x01 && frame[3] != 0x02
 					&& frame[3] != 0x03 && frame[3] != 0x04 && frame[3] != 0x66 && frame[3] != 0x55) {
@@ -275,12 +311,11 @@ void readChar() {
 		switch(frame[3]){ // komendy
 					case  0x55:
 						put("\nkomenda 0x55");
+
 						LCD_clrScr();
-						LCD_print("On latawcem",0,0);
-						LCD_print("bialym na",0,1);
-						LCD_print("niebie!",0,2);
-						LCD_print("Ona plynie",0,3);
-						LCD_print("dokola siebie!",0,4);
+						char tab_meancpm[100];
+						sprintf(tab_meancpm, "MCPM: %d", meanCPM);
+						LCD_print(tab_meancpm,0,4);
 
 						break;
 
@@ -288,13 +323,18 @@ void readChar() {
 						put("\nkomenda 0x22");
 
 						LCD_clrScr();
-						LCD_print("Milo Mi!",0,0);
+						char res[1000];
+						sprintf(res, "uSH: %.4f", uSperH);
+						LCD_print(res,0,1);
 
 						break;
 					case 0x11:
 						put("\nkomenda 0x11");
+
 						LCD_clrScr();
-						LCD_print("Milo Mi!",0,0);
+						char tab_cpm[1000];
+						sprintf(tab_cpm, "CPM: %d", CPM);
+						LCD_print(tab_cpm,0,2);
 
 						break;
 					case 0x66:
@@ -317,7 +357,7 @@ void readChar() {
 
 void checkCRC() {//Obliczanie CRC
 	crc[0] = crc[1] = 0x00;
-	int frameLength = 4 + dataLength;
+	int frameLength = 4 + dataLength; // długość ramki to znak  początka, leng, notg i komenda dlatego 4+)
  	for(int i = 0; i < frameLength; i++) { // sprawdzanie kolejnych bajtów ramki
  		char byte = frame[i];
  		int numberOf1 = 0;
@@ -367,7 +407,6 @@ int main(void)
 	LCD_setDIN(Din_GPIO_Port, Din_Pin);
 	LCD_setCLK(Clk_GPIO_Port, Clk_Pin);
 
-	char res[20];
 
 
 
@@ -395,21 +434,14 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+
   HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_3);
+
   HAL_UART_Receive_IT(&huart2, &RxBUF[rx_e], 1);
+
   put("\nWpisz ramke: ");
 
   LCD_init();
-
-  //LCD_print("Wait...",0,0);
-  //  LCD_print("bialym na",0,1);
-    // LCD_print("niebie!",0,2);
-    // LCD_print("Ona plynie",0,3);
-   // LCD_print("dokola siebie!",0,4);
-
- // float pomocnicza = 0.8888;
-
-
 
 
   /* USER CODE END 2 */
@@ -417,17 +449,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
- // sprintf(res, "A:%d", pomocnicza);
- // 	  LCD_print(3, 1, res);
-
-
   while (1)
   {
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
 	  if (rx_e != rx_f)
 		  readChar();
   }
@@ -462,7 +489,7 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV8;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
@@ -489,16 +516,16 @@ void my_Error_Handler()
 			rx_f++;
 
 	switch (error) {
-	case 0x05: put("\nNierozpoznane polecenie. ");     //EE00FF000000
+	case 0x05: put("\nNierozpoznane polecenie. ");                      //EE00FF000000
 			   break;
-	case 0x06: put("\nBledny kod CRC. ");			   //EE00FF110001
+	case 0x06: put("\nBledny kod CRC. ");			                      //EE00FF110001
 			   break;
-	case 0x07: put("\nBledny znak po znaku 0xEA. ");   //EE01FE33EA00
+	case 0x07: put("\nBledny znak po znaku 0xEA. ");                    //EE01FE33EA00
 			   break;
-	case 0x08: put("\nBledna struktura ramki. ");      //EE0022
+	case 0x08: put("\nBledna struktura ramki. ");                       //EE0022
 			   break;
-	case 0x09: put("\nBledna zawartosc pola LENGTH. ");//EEFF00
-			   break;							// dobra:EE00FF330000, EE08F73304040404040404046FF0, EE01FE660660
+	case 0x09: put("\nBledna zawartosc pola LENGTH. ");                //EEFF00
+			   break;							                       // dobra:EE00FF330000, EE08F73304040404040404046FF0, EE01FE660660
 	case 0x0A: put("\nPrzekroczony zakres amplitudy ");
 			   break;
 	default:   put("\nNierozpoznany kod bledu. ");

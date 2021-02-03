@@ -128,46 +128,54 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
 				Error_Handler(); //jeśli coś innego to error
 			}
 
-			CPM = 400000 / Difference;
-//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
+
+			//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
 			Is_First_Captured = 0;  // resetowanie flagi naszej.
 
-			LCD_clrScr();
 
-			uSperH = ((CPM * 0.006666));   // Konwertowanie wartości
-			if (uSperH > uSperHmax) {
-			      uSperHmax = uSperH;
-			    }
-			char res[1000];
-			sprintf(res, "uSH: %.4f", uSperH);
-			LCD_print(res,0,3);
-			for (int i = 0; i < numReadings; i++) {
-			      readings[i] = 0;
-			    }
+		}
 
 
-			total -= readings[indeks];
-			readings[indeks] = CPM;
-			total += readings[indeks];
-			indeks = (indeks + 1);
+		CPM = 400000 / Difference;
+		//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
 
-			if (indeks >= numReadings){
-				indeks = 0;
+
+		LCD_clrScr();
+
+		uSperH = ((CPM * 0.006666));   // Konwertowanie wartości
+		if (uSperH > uSperHmax) {
+			  uSperHmax = uSperH;
+			}
+		char res[1000];
+		sprintf(res, "uSH: %.4f", uSperH);
+		LCD_print(res,0,3);
+		for (int i = 0; i < numReadings; i++) {
+			  readings[i] = 0;
 			}
 
 
-			meanCPM = total / numReadings;
+		total -= readings[indeks];
+		readings[indeks] = CPM;
+		total += readings[indeks];
+		indeks = (indeks + 1);
 
-
-			 char tab_cpm[1000];
-			 sprintf(tab_cpm, "CPM: %d", CPM);
-			 LCD_print(tab_cpm,0,2);
-
-			 char tab_meancpm[100];
-			 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
-			 LCD_print(tab_meancpm,0,4);
+		if (indeks >= numReadings){
+			indeks = 0;
 		}
+
+
+		meanCPM = total / numReadings;
+
+
+		 char tab_cpm[1000];
+		 sprintf(tab_cpm, "CPM: %d", CPM);
+		 LCD_print(tab_cpm,0,2);
+
+		 char tab_meancpm[100];
+		 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
+		 LCD_print(tab_meancpm,0,4);
 	}
+
 }
 
 

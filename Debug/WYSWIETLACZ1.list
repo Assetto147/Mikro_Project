@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  00018436  00000000  00000000  00030718  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0000c1f1  00000000  00000000  00048b4e  2**0
+ 17 .debug_line   0000c1ed  00000000  00000000  00048b4e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    0008b41f  00000000  00000000  00054d3f  2**0
+ 18 .debug_str    0008b41f  00000000  00000000  00054d3b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000e015e  2**0
+ 19 .comment      0000007b  00000000  00000000  000e015a  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000043f0  00000000  00000000  000e01dc  2**2
+ 20 .debug_frame  000043f0  00000000  00000000  000e01d8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1243,7 +1243,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
  8000d8e:	681b      	ldr	r3, [r3, #0]
  8000d90:	7f1b      	ldrb	r3, [r3, #28]
  8000d92:	2b04      	cmp	r3, #4
- 8000d94:	f040 80ea 	bne.w	8000f6c <HAL_TIM_IC_CaptureCallback+0x1ec>
+ 8000d94:	f040 80e9 	bne.w	8000f6a <HAL_TIM_IC_CaptureCallback+0x1ea>
 	{
 		if (Is_First_Captured==0)  // jeśli flaga jest równa zero to wykonujemy:
  8000d98:	4b79      	ldr	r3, [pc, #484]	; (8000f80 <HAL_TIM_IC_CaptureCallback+0x200>)
@@ -1266,228 +1266,263 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim2)
  8000db8:	4b71      	ldr	r3, [pc, #452]	; (8000f80 <HAL_TIM_IC_CaptureCallback+0x200>)
  8000dba:	2201      	movs	r2, #1
  8000dbc:	701a      	strb	r2, [r3, #0]
-			 char tab_meancpm[100];
-			 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
-			 LCD_print(tab_meancpm,0,4);
+ 8000dbe:	e031      	b.n	8000e24 <HAL_TIM_IC_CaptureCallback+0xa4>
 		}
-	}
-}
- 8000dbe:	e0d5      	b.n	8000f6c <HAL_TIM_IC_CaptureCallback+0x1ec>
+
 		else if (Is_First_Captured)  // jeśli flaga jest podniesiona to:
  8000dc0:	4b6f      	ldr	r3, [pc, #444]	; (8000f80 <HAL_TIM_IC_CaptureCallback+0x200>)
  8000dc2:	781b      	ldrb	r3, [r3, #0]
  8000dc4:	2b00      	cmp	r3, #0
- 8000dc6:	f000 80d1 	beq.w	8000f6c <HAL_TIM_IC_CaptureCallback+0x1ec>
+ 8000dc6:	d02d      	beq.n	8000e24 <HAL_TIM_IC_CaptureCallback+0xa4>
+		{
 			value_2 = HAL_TIM_ReadCapturedValue(htim2, TIM_CHANNEL_3);  // pobieramy drugą wartość:
- 8000dca:	1d3b      	adds	r3, r7, #4
- 8000dcc:	2108      	movs	r1, #8
- 8000dce:	6818      	ldr	r0, [r3, #0]
- 8000dd0:	f002 fcec 	bl	80037ac <HAL_TIM_ReadCapturedValue>
- 8000dd4:	4603      	mov	r3, r0
- 8000dd6:	461a      	mov	r2, r3
- 8000dd8:	4b6b      	ldr	r3, [pc, #428]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
- 8000dda:	601a      	str	r2, [r3, #0]
+ 8000dc8:	1d3b      	adds	r3, r7, #4
+ 8000dca:	2108      	movs	r1, #8
+ 8000dcc:	6818      	ldr	r0, [r3, #0]
+ 8000dce:	f002 fced 	bl	80037ac <HAL_TIM_ReadCapturedValue>
+ 8000dd2:	4603      	mov	r3, r0
+ 8000dd4:	461a      	mov	r2, r3
+ 8000dd6:	4b6c      	ldr	r3, [pc, #432]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
+ 8000dd8:	601a      	str	r2, [r3, #0]
+
 			if (value_2 > value_1)
- 8000ddc:	4b6a      	ldr	r3, [pc, #424]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
- 8000dde:	681a      	ldr	r2, [r3, #0]
- 8000de0:	4b68      	ldr	r3, [pc, #416]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
- 8000de2:	681b      	ldr	r3, [r3, #0]
- 8000de4:	429a      	cmp	r2, r3
- 8000de6:	dd07      	ble.n	8000df8 <HAL_TIM_IC_CaptureCallback+0x78>
+ 8000dda:	4b6b      	ldr	r3, [pc, #428]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
+ 8000ddc:	681a      	ldr	r2, [r3, #0]
+ 8000dde:	4b69      	ldr	r3, [pc, #420]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
+ 8000de0:	681b      	ldr	r3, [r3, #0]
+ 8000de2:	429a      	cmp	r2, r3
+ 8000de4:	dd07      	ble.n	8000df6 <HAL_TIM_IC_CaptureCallback+0x76>
+			{
 				Difference = value_2-value_1;   // Wyliczenie różnicy
- 8000de8:	4b67      	ldr	r3, [pc, #412]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
- 8000dea:	681a      	ldr	r2, [r3, #0]
- 8000dec:	4b65      	ldr	r3, [pc, #404]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
- 8000dee:	681b      	ldr	r3, [r3, #0]
- 8000df0:	1ad3      	subs	r3, r2, r3
- 8000df2:	4a66      	ldr	r2, [pc, #408]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
- 8000df4:	6013      	str	r3, [r2, #0]
- 8000df6:	e013      	b.n	8000e20 <HAL_TIM_IC_CaptureCallback+0xa0>
+ 8000de6:	4b68      	ldr	r3, [pc, #416]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
+ 8000de8:	681a      	ldr	r2, [r3, #0]
+ 8000dea:	4b66      	ldr	r3, [pc, #408]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
+ 8000dec:	681b      	ldr	r3, [r3, #0]
+ 8000dee:	1ad3      	subs	r3, r2, r3
+ 8000df0:	4a66      	ldr	r2, [pc, #408]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
+ 8000df2:	6013      	str	r3, [r2, #0]
+ 8000df4:	e013      	b.n	8000e1e <HAL_TIM_IC_CaptureCallback+0x9e>
+			}
+
 			else if (value_2 < value_1)
- 8000df8:	4b63      	ldr	r3, [pc, #396]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
- 8000dfa:	681a      	ldr	r2, [r3, #0]
- 8000dfc:	4b61      	ldr	r3, [pc, #388]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
- 8000dfe:	681b      	ldr	r3, [r3, #0]
- 8000e00:	429a      	cmp	r2, r3
- 8000e02:	da0b      	bge.n	8000e1c <HAL_TIM_IC_CaptureCallback+0x9c>
+ 8000df6:	4b64      	ldr	r3, [pc, #400]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
+ 8000df8:	681a      	ldr	r2, [r3, #0]
+ 8000dfa:	4b62      	ldr	r3, [pc, #392]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
+ 8000dfc:	681b      	ldr	r3, [r3, #0]
+ 8000dfe:	429a      	cmp	r2, r3
+ 8000e00:	da0b      	bge.n	8000e1a <HAL_TIM_IC_CaptureCallback+0x9a>
+			{
 				Difference = ((0xffff-value_1)+value_2) +1; // to samo tylko jeśli value_1 jest większy od 0xffff to nasz prescaler (maksymalna wartość)
- 8000e04:	4b5f      	ldr	r3, [pc, #380]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
- 8000e06:	681b      	ldr	r3, [r3, #0]
- 8000e08:	f5c3 437f 	rsb	r3, r3, #65280	; 0xff00
- 8000e0c:	33ff      	adds	r3, #255	; 0xff
- 8000e0e:	4a5e      	ldr	r2, [pc, #376]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
- 8000e10:	6812      	ldr	r2, [r2, #0]
- 8000e12:	4413      	add	r3, r2
- 8000e14:	3301      	adds	r3, #1
- 8000e16:	4a5d      	ldr	r2, [pc, #372]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
- 8000e18:	6013      	str	r3, [r2, #0]
- 8000e1a:	e001      	b.n	8000e20 <HAL_TIM_IC_CaptureCallback+0xa0>
+ 8000e02:	4b60      	ldr	r3, [pc, #384]	; (8000f84 <HAL_TIM_IC_CaptureCallback+0x204>)
+ 8000e04:	681b      	ldr	r3, [r3, #0]
+ 8000e06:	f5c3 437f 	rsb	r3, r3, #65280	; 0xff00
+ 8000e0a:	33ff      	adds	r3, #255	; 0xff
+ 8000e0c:	4a5e      	ldr	r2, [pc, #376]	; (8000f88 <HAL_TIM_IC_CaptureCallback+0x208>)
+ 8000e0e:	6812      	ldr	r2, [r2, #0]
+ 8000e10:	4413      	add	r3, r2
+ 8000e12:	3301      	adds	r3, #1
+ 8000e14:	4a5d      	ldr	r2, [pc, #372]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
+ 8000e16:	6013      	str	r3, [r2, #0]
+ 8000e18:	e001      	b.n	8000e1e <HAL_TIM_IC_CaptureCallback+0x9e>
+			}
+
+			else
+			{
 				Error_Handler(); //jeśli coś innego to error
- 8000e1c:	f000 fd1e 	bl	800185c <Error_Handler>
-			CPM = 400000 / Difference;
- 8000e20:	4b5a      	ldr	r3, [pc, #360]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
- 8000e22:	681b      	ldr	r3, [r3, #0]
- 8000e24:	4a5a      	ldr	r2, [pc, #360]	; (8000f90 <HAL_TIM_IC_CaptureCallback+0x210>)
- 8000e26:	fb92 f3f3 	sdiv	r3, r2, r3
- 8000e2a:	4a5a      	ldr	r2, [pc, #360]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
- 8000e2c:	6013      	str	r3, [r2, #0]
+ 8000e1a:	f000 fd1f 	bl	800185c <Error_Handler>
+			}
+
+
+			//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
 			Is_First_Captured = 0;  // resetowanie flagi naszej.
- 8000e2e:	4b54      	ldr	r3, [pc, #336]	; (8000f80 <HAL_TIM_IC_CaptureCallback+0x200>)
- 8000e30:	2200      	movs	r2, #0
- 8000e32:	701a      	strb	r2, [r3, #0]
-			LCD_clrScr();
- 8000e34:	f000 fe92 	bl	8001b5c <LCD_clrScr>
-			uSperH = ((CPM * 0.006666));   // Konwertowanie wartości
- 8000e38:	4b56      	ldr	r3, [pc, #344]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
- 8000e3a:	681b      	ldr	r3, [r3, #0]
- 8000e3c:	4618      	mov	r0, r3
- 8000e3e:	f7ff fae1 	bl	8000404 <__aeabi_i2d>
- 8000e42:	a34d      	add	r3, pc, #308	; (adr r3, 8000f78 <HAL_TIM_IC_CaptureCallback+0x1f8>)
- 8000e44:	e9d3 2300 	ldrd	r2, r3, [r3]
- 8000e48:	f7ff fb46 	bl	80004d8 <__aeabi_dmul>
- 8000e4c:	4603      	mov	r3, r0
- 8000e4e:	460c      	mov	r4, r1
- 8000e50:	4618      	mov	r0, r3
- 8000e52:	4621      	mov	r1, r4
- 8000e54:	f7ff fe38 	bl	8000ac8 <__aeabi_d2f>
- 8000e58:	4602      	mov	r2, r0
- 8000e5a:	4b4f      	ldr	r3, [pc, #316]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
- 8000e5c:	601a      	str	r2, [r3, #0]
-			if (uSperH > uSperHmax) {
- 8000e5e:	4b4e      	ldr	r3, [pc, #312]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
- 8000e60:	681a      	ldr	r2, [r3, #0]
- 8000e62:	4b4e      	ldr	r3, [pc, #312]	; (8000f9c <HAL_TIM_IC_CaptureCallback+0x21c>)
- 8000e64:	681b      	ldr	r3, [r3, #0]
- 8000e66:	4619      	mov	r1, r3
- 8000e68:	4610      	mov	r0, r2
- 8000e6a:	f7ff fee9 	bl	8000c40 <__aeabi_fcmpgt>
- 8000e6e:	4603      	mov	r3, r0
- 8000e70:	2b00      	cmp	r3, #0
- 8000e72:	d003      	beq.n	8000e7c <HAL_TIM_IC_CaptureCallback+0xfc>
-			      uSperHmax = uSperH;
- 8000e74:	4b48      	ldr	r3, [pc, #288]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
- 8000e76:	681b      	ldr	r3, [r3, #0]
- 8000e78:	4a48      	ldr	r2, [pc, #288]	; (8000f9c <HAL_TIM_IC_CaptureCallback+0x21c>)
- 8000e7a:	6013      	str	r3, [r2, #0]
-			sprintf(res, "uSH: %.4f", uSperH);
- 8000e7c:	4b46      	ldr	r3, [pc, #280]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
- 8000e7e:	681b      	ldr	r3, [r3, #0]
- 8000e80:	4618      	mov	r0, r3
- 8000e82:	f7ff fad1 	bl	8000428 <__aeabi_f2d>
- 8000e86:	4603      	mov	r3, r0
- 8000e88:	460c      	mov	r4, r1
- 8000e8a:	f107 006c 	add.w	r0, r7, #108	; 0x6c
- 8000e8e:	461a      	mov	r2, r3
- 8000e90:	4623      	mov	r3, r4
- 8000e92:	4943      	ldr	r1, [pc, #268]	; (8000fa0 <HAL_TIM_IC_CaptureCallback+0x220>)
- 8000e94:	f004 f988 	bl	80051a8 <siprintf>
-			LCD_print(res,0,3);
- 8000e98:	f107 036c 	add.w	r3, r7, #108	; 0x6c
- 8000e9c:	2203      	movs	r2, #3
- 8000e9e:	2100      	movs	r1, #0
- 8000ea0:	4618      	mov	r0, r3
- 8000ea2:	f000 fe3d 	bl	8001b20 <LCD_print>
-			for (int i = 0; i < numReadings; i++) {
- 8000ea6:	2300      	movs	r3, #0
- 8000ea8:	f8c7 383c 	str.w	r3, [r7, #2108]	; 0x83c
- 8000eac:	e00a      	b.n	8000ec4 <HAL_TIM_IC_CaptureCallback+0x144>
-			      readings[i] = 0;
- 8000eae:	4a3d      	ldr	r2, [pc, #244]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
- 8000eb0:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
- 8000eb4:	2100      	movs	r1, #0
- 8000eb6:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-			for (int i = 0; i < numReadings; i++) {
- 8000eba:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
- 8000ebe:	3301      	adds	r3, #1
- 8000ec0:	f8c7 383c 	str.w	r3, [r7, #2108]	; 0x83c
- 8000ec4:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
- 8000ec8:	2b1d      	cmp	r3, #29
- 8000eca:	ddf0      	ble.n	8000eae <HAL_TIM_IC_CaptureCallback+0x12e>
-			total -= readings[indeks];
- 8000ecc:	4b36      	ldr	r3, [pc, #216]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
- 8000ece:	681a      	ldr	r2, [r3, #0]
- 8000ed0:	4b36      	ldr	r3, [pc, #216]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000ed2:	681b      	ldr	r3, [r3, #0]
- 8000ed4:	4933      	ldr	r1, [pc, #204]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
- 8000ed6:	f851 3023 	ldr.w	r3, [r1, r3, lsl #2]
- 8000eda:	1ad3      	subs	r3, r2, r3
- 8000edc:	4a32      	ldr	r2, [pc, #200]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
- 8000ede:	6013      	str	r3, [r2, #0]
-			readings[indeks] = CPM;
- 8000ee0:	4b32      	ldr	r3, [pc, #200]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000ee2:	681b      	ldr	r3, [r3, #0]
- 8000ee4:	4a2b      	ldr	r2, [pc, #172]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
- 8000ee6:	6812      	ldr	r2, [r2, #0]
- 8000ee8:	492e      	ldr	r1, [pc, #184]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
- 8000eea:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
-			total += readings[indeks];
- 8000eee:	4b2f      	ldr	r3, [pc, #188]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000ef0:	681b      	ldr	r3, [r3, #0]
- 8000ef2:	4a2c      	ldr	r2, [pc, #176]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
- 8000ef4:	f852 2023 	ldr.w	r2, [r2, r3, lsl #2]
- 8000ef8:	4b2b      	ldr	r3, [pc, #172]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
- 8000efa:	681b      	ldr	r3, [r3, #0]
- 8000efc:	4413      	add	r3, r2
- 8000efe:	4a2a      	ldr	r2, [pc, #168]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
- 8000f00:	6013      	str	r3, [r2, #0]
-			indeks = (indeks + 1);
- 8000f02:	4b2a      	ldr	r3, [pc, #168]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000f04:	681b      	ldr	r3, [r3, #0]
- 8000f06:	3301      	adds	r3, #1
- 8000f08:	4a28      	ldr	r2, [pc, #160]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000f0a:	6013      	str	r3, [r2, #0]
-			if (indeks >= numReadings){
- 8000f0c:	4b27      	ldr	r3, [pc, #156]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000f0e:	681b      	ldr	r3, [r3, #0]
- 8000f10:	2b1d      	cmp	r3, #29
- 8000f12:	dd02      	ble.n	8000f1a <HAL_TIM_IC_CaptureCallback+0x19a>
-				indeks = 0;
- 8000f14:	4b25      	ldr	r3, [pc, #148]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
- 8000f16:	2200      	movs	r2, #0
- 8000f18:	601a      	str	r2, [r3, #0]
-			meanCPM = total / numReadings;
- 8000f1a:	4b23      	ldr	r3, [pc, #140]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
- 8000f1c:	681b      	ldr	r3, [r3, #0]
- 8000f1e:	4a24      	ldr	r2, [pc, #144]	; (8000fb0 <HAL_TIM_IC_CaptureCallback+0x230>)
- 8000f20:	fb82 1203 	smull	r1, r2, r2, r3
- 8000f24:	441a      	add	r2, r3
- 8000f26:	1112      	asrs	r2, r2, #4
- 8000f28:	17db      	asrs	r3, r3, #31
- 8000f2a:	1ad3      	subs	r3, r2, r3
- 8000f2c:	4a21      	ldr	r2, [pc, #132]	; (8000fb4 <HAL_TIM_IC_CaptureCallback+0x234>)
- 8000f2e:	6013      	str	r3, [r2, #0]
-			 sprintf(tab_cpm, "CPM: %d", CPM);
- 8000f30:	4b18      	ldr	r3, [pc, #96]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
- 8000f32:	681a      	ldr	r2, [r3, #0]
- 8000f34:	f207 4354 	addw	r3, r7, #1108	; 0x454
- 8000f38:	491f      	ldr	r1, [pc, #124]	; (8000fb8 <HAL_TIM_IC_CaptureCallback+0x238>)
- 8000f3a:	4618      	mov	r0, r3
- 8000f3c:	f004 f934 	bl	80051a8 <siprintf>
-			 LCD_print(tab_cpm,0,2);
- 8000f40:	f207 4354 	addw	r3, r7, #1108	; 0x454
- 8000f44:	2202      	movs	r2, #2
- 8000f46:	2100      	movs	r1, #0
- 8000f48:	4618      	mov	r0, r3
- 8000f4a:	f000 fde9 	bl	8001b20 <LCD_print>
-			 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
- 8000f4e:	4b19      	ldr	r3, [pc, #100]	; (8000fb4 <HAL_TIM_IC_CaptureCallback+0x234>)
- 8000f50:	681a      	ldr	r2, [r3, #0]
- 8000f52:	f107 0308 	add.w	r3, r7, #8
- 8000f56:	4919      	ldr	r1, [pc, #100]	; (8000fbc <HAL_TIM_IC_CaptureCallback+0x23c>)
- 8000f58:	4618      	mov	r0, r3
- 8000f5a:	f004 f925 	bl	80051a8 <siprintf>
-			 LCD_print(tab_meancpm,0,4);
- 8000f5e:	f107 0308 	add.w	r3, r7, #8
- 8000f62:	2204      	movs	r2, #4
- 8000f64:	2100      	movs	r1, #0
- 8000f66:	4618      	mov	r0, r3
- 8000f68:	f000 fdda 	bl	8001b20 <LCD_print>
+ 8000e1e:	4b58      	ldr	r3, [pc, #352]	; (8000f80 <HAL_TIM_IC_CaptureCallback+0x200>)
+ 8000e20:	2200      	movs	r2, #0
+ 8000e22:	701a      	strb	r2, [r3, #0]
+
+
+		}
+
+
+		CPM = 400000 / Difference;
+ 8000e24:	4b59      	ldr	r3, [pc, #356]	; (8000f8c <HAL_TIM_IC_CaptureCallback+0x20c>)
+ 8000e26:	681b      	ldr	r3, [r3, #0]
+ 8000e28:	4a59      	ldr	r2, [pc, #356]	; (8000f90 <HAL_TIM_IC_CaptureCallback+0x210>)
+ 8000e2a:	fb92 f3f3 	sdiv	r3, r2, r3
+ 8000e2e:	4a59      	ldr	r2, [pc, #356]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
+ 8000e30:	6013      	str	r3, [r2, #0]
+		//CPM = ((HAL_RCC_GetPCLK1Freq()/1000)/Difference);  // liczenie wartości CPM
+
+
+		LCD_clrScr();
+ 8000e32:	f000 fe93 	bl	8001b5c <LCD_clrScr>
+
+		uSperH = ((CPM * 0.006666));   // Konwertowanie wartości
+ 8000e36:	4b57      	ldr	r3, [pc, #348]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
+ 8000e38:	681b      	ldr	r3, [r3, #0]
+ 8000e3a:	4618      	mov	r0, r3
+ 8000e3c:	f7ff fae2 	bl	8000404 <__aeabi_i2d>
+ 8000e40:	a34d      	add	r3, pc, #308	; (adr r3, 8000f78 <HAL_TIM_IC_CaptureCallback+0x1f8>)
+ 8000e42:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8000e46:	f7ff fb47 	bl	80004d8 <__aeabi_dmul>
+ 8000e4a:	4603      	mov	r3, r0
+ 8000e4c:	460c      	mov	r4, r1
+ 8000e4e:	4618      	mov	r0, r3
+ 8000e50:	4621      	mov	r1, r4
+ 8000e52:	f7ff fe39 	bl	8000ac8 <__aeabi_d2f>
+ 8000e56:	4602      	mov	r2, r0
+ 8000e58:	4b4f      	ldr	r3, [pc, #316]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
+ 8000e5a:	601a      	str	r2, [r3, #0]
+		if (uSperH > uSperHmax) {
+ 8000e5c:	4b4e      	ldr	r3, [pc, #312]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
+ 8000e5e:	681a      	ldr	r2, [r3, #0]
+ 8000e60:	4b4e      	ldr	r3, [pc, #312]	; (8000f9c <HAL_TIM_IC_CaptureCallback+0x21c>)
+ 8000e62:	681b      	ldr	r3, [r3, #0]
+ 8000e64:	4619      	mov	r1, r3
+ 8000e66:	4610      	mov	r0, r2
+ 8000e68:	f7ff feea 	bl	8000c40 <__aeabi_fcmpgt>
+ 8000e6c:	4603      	mov	r3, r0
+ 8000e6e:	2b00      	cmp	r3, #0
+ 8000e70:	d003      	beq.n	8000e7a <HAL_TIM_IC_CaptureCallback+0xfa>
+			  uSperHmax = uSperH;
+ 8000e72:	4b49      	ldr	r3, [pc, #292]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
+ 8000e74:	681b      	ldr	r3, [r3, #0]
+ 8000e76:	4a49      	ldr	r2, [pc, #292]	; (8000f9c <HAL_TIM_IC_CaptureCallback+0x21c>)
+ 8000e78:	6013      	str	r3, [r2, #0]
+			}
+		char res[1000];
+		sprintf(res, "uSH: %.4f", uSperH);
+ 8000e7a:	4b47      	ldr	r3, [pc, #284]	; (8000f98 <HAL_TIM_IC_CaptureCallback+0x218>)
+ 8000e7c:	681b      	ldr	r3, [r3, #0]
+ 8000e7e:	4618      	mov	r0, r3
+ 8000e80:	f7ff fad2 	bl	8000428 <__aeabi_f2d>
+ 8000e84:	4603      	mov	r3, r0
+ 8000e86:	460c      	mov	r4, r1
+ 8000e88:	f107 006c 	add.w	r0, r7, #108	; 0x6c
+ 8000e8c:	461a      	mov	r2, r3
+ 8000e8e:	4623      	mov	r3, r4
+ 8000e90:	4943      	ldr	r1, [pc, #268]	; (8000fa0 <HAL_TIM_IC_CaptureCallback+0x220>)
+ 8000e92:	f004 f989 	bl	80051a8 <siprintf>
+		LCD_print(res,0,3);
+ 8000e96:	f107 036c 	add.w	r3, r7, #108	; 0x6c
+ 8000e9a:	2203      	movs	r2, #3
+ 8000e9c:	2100      	movs	r1, #0
+ 8000e9e:	4618      	mov	r0, r3
+ 8000ea0:	f000 fe3e 	bl	8001b20 <LCD_print>
+		for (int i = 0; i < numReadings; i++) {
+ 8000ea4:	2300      	movs	r3, #0
+ 8000ea6:	f8c7 383c 	str.w	r3, [r7, #2108]	; 0x83c
+ 8000eaa:	e00a      	b.n	8000ec2 <HAL_TIM_IC_CaptureCallback+0x142>
+			  readings[i] = 0;
+ 8000eac:	4a3d      	ldr	r2, [pc, #244]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
+ 8000eae:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
+ 8000eb2:	2100      	movs	r1, #0
+ 8000eb4:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
+		for (int i = 0; i < numReadings; i++) {
+ 8000eb8:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
+ 8000ebc:	3301      	adds	r3, #1
+ 8000ebe:	f8c7 383c 	str.w	r3, [r7, #2108]	; 0x83c
+ 8000ec2:	f8d7 383c 	ldr.w	r3, [r7, #2108]	; 0x83c
+ 8000ec6:	2b1d      	cmp	r3, #29
+ 8000ec8:	ddf0      	ble.n	8000eac <HAL_TIM_IC_CaptureCallback+0x12c>
+			}
+
+
+		total -= readings[indeks];
+ 8000eca:	4b37      	ldr	r3, [pc, #220]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
+ 8000ecc:	681a      	ldr	r2, [r3, #0]
+ 8000ece:	4b37      	ldr	r3, [pc, #220]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000ed0:	681b      	ldr	r3, [r3, #0]
+ 8000ed2:	4934      	ldr	r1, [pc, #208]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
+ 8000ed4:	f851 3023 	ldr.w	r3, [r1, r3, lsl #2]
+ 8000ed8:	1ad3      	subs	r3, r2, r3
+ 8000eda:	4a33      	ldr	r2, [pc, #204]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
+ 8000edc:	6013      	str	r3, [r2, #0]
+		readings[indeks] = CPM;
+ 8000ede:	4b33      	ldr	r3, [pc, #204]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000ee0:	681b      	ldr	r3, [r3, #0]
+ 8000ee2:	4a2c      	ldr	r2, [pc, #176]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
+ 8000ee4:	6812      	ldr	r2, [r2, #0]
+ 8000ee6:	492f      	ldr	r1, [pc, #188]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
+ 8000ee8:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
+		total += readings[indeks];
+ 8000eec:	4b2f      	ldr	r3, [pc, #188]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000eee:	681b      	ldr	r3, [r3, #0]
+ 8000ef0:	4a2c      	ldr	r2, [pc, #176]	; (8000fa4 <HAL_TIM_IC_CaptureCallback+0x224>)
+ 8000ef2:	f852 2023 	ldr.w	r2, [r2, r3, lsl #2]
+ 8000ef6:	4b2c      	ldr	r3, [pc, #176]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
+ 8000ef8:	681b      	ldr	r3, [r3, #0]
+ 8000efa:	4413      	add	r3, r2
+ 8000efc:	4a2a      	ldr	r2, [pc, #168]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
+ 8000efe:	6013      	str	r3, [r2, #0]
+		indeks = (indeks + 1);
+ 8000f00:	4b2a      	ldr	r3, [pc, #168]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000f02:	681b      	ldr	r3, [r3, #0]
+ 8000f04:	3301      	adds	r3, #1
+ 8000f06:	4a29      	ldr	r2, [pc, #164]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000f08:	6013      	str	r3, [r2, #0]
+
+		if (indeks >= numReadings){
+ 8000f0a:	4b28      	ldr	r3, [pc, #160]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000f0c:	681b      	ldr	r3, [r3, #0]
+ 8000f0e:	2b1d      	cmp	r3, #29
+ 8000f10:	dd02      	ble.n	8000f18 <HAL_TIM_IC_CaptureCallback+0x198>
+			indeks = 0;
+ 8000f12:	4b26      	ldr	r3, [pc, #152]	; (8000fac <HAL_TIM_IC_CaptureCallback+0x22c>)
+ 8000f14:	2200      	movs	r2, #0
+ 8000f16:	601a      	str	r2, [r3, #0]
+		}
+
+
+		meanCPM = total / numReadings;
+ 8000f18:	4b23      	ldr	r3, [pc, #140]	; (8000fa8 <HAL_TIM_IC_CaptureCallback+0x228>)
+ 8000f1a:	681b      	ldr	r3, [r3, #0]
+ 8000f1c:	4a24      	ldr	r2, [pc, #144]	; (8000fb0 <HAL_TIM_IC_CaptureCallback+0x230>)
+ 8000f1e:	fb82 1203 	smull	r1, r2, r2, r3
+ 8000f22:	441a      	add	r2, r3
+ 8000f24:	1112      	asrs	r2, r2, #4
+ 8000f26:	17db      	asrs	r3, r3, #31
+ 8000f28:	1ad3      	subs	r3, r2, r3
+ 8000f2a:	4a22      	ldr	r2, [pc, #136]	; (8000fb4 <HAL_TIM_IC_CaptureCallback+0x234>)
+ 8000f2c:	6013      	str	r3, [r2, #0]
+
+
+		 char tab_cpm[1000];
+		 sprintf(tab_cpm, "CPM: %d", CPM);
+ 8000f2e:	4b19      	ldr	r3, [pc, #100]	; (8000f94 <HAL_TIM_IC_CaptureCallback+0x214>)
+ 8000f30:	681a      	ldr	r2, [r3, #0]
+ 8000f32:	f207 4354 	addw	r3, r7, #1108	; 0x454
+ 8000f36:	4920      	ldr	r1, [pc, #128]	; (8000fb8 <HAL_TIM_IC_CaptureCallback+0x238>)
+ 8000f38:	4618      	mov	r0, r3
+ 8000f3a:	f004 f935 	bl	80051a8 <siprintf>
+		 LCD_print(tab_cpm,0,2);
+ 8000f3e:	f207 4354 	addw	r3, r7, #1108	; 0x454
+ 8000f42:	2202      	movs	r2, #2
+ 8000f44:	2100      	movs	r1, #0
+ 8000f46:	4618      	mov	r0, r3
+ 8000f48:	f000 fdea 	bl	8001b20 <LCD_print>
+
+		 char tab_meancpm[100];
+		 sprintf(tab_meancpm, "MCPM: %d", meanCPM);
+ 8000f4c:	4b19      	ldr	r3, [pc, #100]	; (8000fb4 <HAL_TIM_IC_CaptureCallback+0x234>)
+ 8000f4e:	681a      	ldr	r2, [r3, #0]
+ 8000f50:	f107 0308 	add.w	r3, r7, #8
+ 8000f54:	4919      	ldr	r1, [pc, #100]	; (8000fbc <HAL_TIM_IC_CaptureCallback+0x23c>)
+ 8000f56:	4618      	mov	r0, r3
+ 8000f58:	f004 f926 	bl	80051a8 <siprintf>
+		 LCD_print(tab_meancpm,0,4);
+ 8000f5c:	f107 0308 	add.w	r3, r7, #8
+ 8000f60:	2204      	movs	r2, #4
+ 8000f62:	2100      	movs	r1, #0
+ 8000f64:	4618      	mov	r0, r3
+ 8000f66:	f000 fddb 	bl	8001b20 <LCD_print>
+	}
+
 }
- 8000f6c:	bf00      	nop
- 8000f6e:	f607 0744 	addw	r7, r7, #2116	; 0x844
- 8000f72:	46bd      	mov	sp, r7
- 8000f74:	bd90      	pop	{r4, r7, pc}
- 8000f76:	bf00      	nop
+ 8000f6a:	bf00      	nop
+ 8000f6c:	f607 0744 	addw	r7, r7, #2116	; 0x844
+ 8000f70:	46bd      	mov	sp, r7
+ 8000f72:	bd90      	pop	{r4, r7, pc}
+ 8000f74:	f3af 8000 	nop.w
  8000f78:	bfec13ba 	.word	0xbfec13ba
  8000f7c:	3f7b4dce 	.word	0x3f7b4dce
  8000f80:	20000214 	.word	0x20000214

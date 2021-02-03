@@ -4095,25 +4095,25 @@ OUTPUT(WYSWIETLACZ1.elf elf32-littlearm)
  .debug_macro   0x00000000000180ef      0x1a3 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim_ex.o
  .debug_macro   0x0000000000018292      0x1a4 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_uart.o
 
-.debug_line     0x0000000000000000     0xc1f1
+.debug_line     0x0000000000000000     0xc1ed
  .debug_line    0x0000000000000000      0x76e Core/Src/gpio.o
- .debug_line    0x000000000000076e      0xbf0 Core/Src/main.o
- .debug_line    0x000000000000135e      0xa8d Core/Src/nokia5110_LCD.o
- .debug_line    0x0000000000001deb      0x758 Core/Src/stm32f1xx_hal_msp.o
- .debug_line    0x0000000000002543      0x835 Core/Src/stm32f1xx_it.o
- .debug_line    0x0000000000002d78      0x4c7 Core/Src/sysmem.o
- .debug_line    0x000000000000323f      0x77f Core/Src/system_stm32f1xx.o
- .debug_line    0x00000000000039be      0x7dd Core/Src/tim.o
- .debug_line    0x000000000000419b      0x78c Core/Src/usart.o
- .debug_line    0x0000000000004927       0x84 Core/Startup/startup_stm32f103rbtx.o
- .debug_line    0x00000000000049ab      0x96a Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.o
- .debug_line    0x0000000000005315      0xa41 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o
- .debug_line    0x0000000000005d56      0xbcf Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.o
- .debug_line    0x0000000000006925      0x966 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_gpio.o
- .debug_line    0x000000000000728b      0xa2a Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_rcc.o
- .debug_line    0x0000000000007cb5     0x20c3 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim.o
- .debug_line    0x0000000000009d78     0x13d1 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim_ex.o
- .debug_line    0x000000000000b149     0x10a8 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_uart.o
+ .debug_line    0x000000000000076e      0xbec Core/Src/main.o
+ .debug_line    0x000000000000135a      0xa8d Core/Src/nokia5110_LCD.o
+ .debug_line    0x0000000000001de7      0x758 Core/Src/stm32f1xx_hal_msp.o
+ .debug_line    0x000000000000253f      0x835 Core/Src/stm32f1xx_it.o
+ .debug_line    0x0000000000002d74      0x4c7 Core/Src/sysmem.o
+ .debug_line    0x000000000000323b      0x77f Core/Src/system_stm32f1xx.o
+ .debug_line    0x00000000000039ba      0x7dd Core/Src/tim.o
+ .debug_line    0x0000000000004197      0x78c Core/Src/usart.o
+ .debug_line    0x0000000000004923       0x84 Core/Startup/startup_stm32f103rbtx.o
+ .debug_line    0x00000000000049a7      0x96a Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.o
+ .debug_line    0x0000000000005311      0xa41 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o
+ .debug_line    0x0000000000005d52      0xbcf Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.o
+ .debug_line    0x0000000000006921      0x966 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_gpio.o
+ .debug_line    0x0000000000007287      0xa2a Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_rcc.o
+ .debug_line    0x0000000000007cb1     0x20c3 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim.o
+ .debug_line    0x0000000000009d74     0x13d1 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_tim_ex.o
+ .debug_line    0x000000000000b145     0x10a8 Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_uart.o
 
 .debug_str      0x0000000000000000    0x8b41f
  .debug_str     0x0000000000000000    0x82fff Core/Src/gpio.o

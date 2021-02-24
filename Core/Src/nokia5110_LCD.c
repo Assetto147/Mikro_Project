@@ -157,6 +157,9 @@ void LCD_goXY(uint8_t x, uint8_t y){
   LCD_write(0x40 | y, LCD_COMMAND); //Row.
 }
 
+
+// Nie użyte w projekcie poniżej
+
 /*
  * @brief Updates the entire screen according to lcd.buffer
  */

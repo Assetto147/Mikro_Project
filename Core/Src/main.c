@@ -306,17 +306,8 @@ void readChar() {
 			my_Error_Handler();
 			return;
 		} else          // jeśli wszystko jest dobrze to możemy zacząć analizować ramkę (sprawdzamy polecenia)
-			if (frame[3] != 0x11 && frame[3] != 0x22 && frame[3] != 0x33
-					&& frame[3] != 0x44 && frame[3] != 0x01 && frame[3] != 0x02
-					&& frame[3] != 0x03 && frame[3] != 0x04 && frame[3] != 0x66 && frame[3] != 0x55) {
-				error = 0x05;  // nierozpoznane polecenie
-				my_Error_Handler();
-				return;
-			}
-
-
-		//Wybór komendy oraz obsługa błędu
-		switch(frame[3]){ // komendy
+			 //Wybór komendy oraz obsługa błędu
+			switch(frame[3]){ // komendy
 					case  0x55:
 						put("\nkomenda 0x55");
 
@@ -353,6 +344,12 @@ void readChar() {
 						break;
 					case 0x33:
 						put("\nkomenda 0x33");
+						break;
+
+					default:
+						error = 0x05;  // nierozpoznane polecenie
+						my_Error_Handler();
+						return;
 						break;
 		}
 	}
